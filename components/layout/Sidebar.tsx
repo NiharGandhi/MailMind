@@ -5,7 +5,7 @@ import { useUIStore } from '@/stores/uiStore'
 import { useSync } from '@/hooks/useSync'
 import { signOut } from 'next-auth/react'
 import {
-  Inbox, Star, Send, Archive, Settings, RefreshCw,
+  Inbox, Star, Send, Calendar, Settings, RefreshCw,
   PenSquare, ChevronLeft, CheckCircle, AlertCircle
 } from 'lucide-react'
 import Link from 'next/link'
@@ -17,6 +17,7 @@ const NAV_ITEMS = [
   { href: '/inbox', label: 'Inbox', icon: Inbox, labelId: 'INBOX' },
   { href: '/starred', label: 'Starred', icon: Star, labelId: 'STARRED' },
   { href: '/sent', label: 'Sent', icon: Send, labelId: 'SENT' },
+  { href: '/calendar', label: 'Calendar', icon: Calendar, labelId: 'CALENDAR' },
 ]
 
 interface SidebarProps {

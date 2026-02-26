@@ -72,11 +72,11 @@ export function MessageBubble({ message, defaultExpanded = false }: MessageBubbl
           >
             {message.bodyHtml ? (
               <div
-                className="prose prose-invert max-w-none text-sm"
+                className="email-body"
                 dangerouslySetInnerHTML={{ __html: sanitizeHtml(message.bodyHtml) }}
               />
             ) : (
-              <pre className="whitespace-pre-wrap font-sans text-sm">
+              <pre className="whitespace-pre-wrap font-sans text-sm" style={{ color: 'var(--text)' }}>
                 {message.bodyText || message.snippet || '(no content)'}
               </pre>
             )}
