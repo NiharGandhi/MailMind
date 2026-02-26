@@ -10,9 +10,17 @@ import { toggleStarAction } from '@/actions/gmail'
 
 interface ThreadListProps {
   threads: EmailThread[]
+  emptyIcon?: string
+  emptyMessage?: string
+  emptySubMessage?: string
 }
 
-export function ThreadList({ threads }: ThreadListProps) {
+export function ThreadList({
+  threads,
+  emptyIcon = '📭',
+  emptyMessage = 'No emails yet',
+  emptySubMessage = 'Your synced emails will appear here',
+}: ThreadListProps) {
   const { selectedThreadId, setSelectedThread } = useEmailStore()
   const { setAIPanelOpen, setMobileView } = useUIStore()
 
@@ -25,10 +33,10 @@ export function ThreadList({ threads }: ThreadListProps) {
   if (!threads.length) {
     return (
       <div className="flex flex-col items-center justify-center h-64 text-center px-8">
-        <div className="mb-3 text-4xl">📭</div>
-        <p className="text-sm font-medium" style={{ color: 'var(--text)' }}>No emails yet</p>
+        <div className="mb-3 text-4xl">{emptyIcon}</div>
+        <p className="text-sm font-medium" style={{ color: 'var(--text)' }}>{emptyMessage}</p>
         <p className="text-xs mt-1" style={{ color: 'var(--muted)' }}>
-          Your synced emails will appear here
+          {emptySubMessage}
         </p>
       </div>
     )

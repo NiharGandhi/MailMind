@@ -4,6 +4,7 @@ import { useAIStore } from '@/stores/aiStore'
 import { Sparkles, RefreshCw } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useState } from 'react'
+import { renderMarkdown } from '@/lib/utils/markdown'
 
 interface ThreadSummaryProps {
   threadId: string
@@ -49,12 +50,9 @@ export function ThreadSummary({ threadId }: ThreadSummaryProps) {
 
       {summary && (
         <div className="space-y-3">
-          <pre
-            className="whitespace-pre-wrap font-sans text-sm leading-relaxed"
-            style={{ color: 'var(--text)' }}
-          >
-            {summary}
-          </pre>
+          <div className="ai-prose fade-in">
+            {renderMarkdown(summary)}
+          </div>
           <Button variant="ghost" size="sm" onClick={generate} disabled={loading}>
             <RefreshCw size={12} /> Regenerate
           </Button>
