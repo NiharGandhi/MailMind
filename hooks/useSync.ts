@@ -14,15 +14,21 @@ export function useSync() {
     if (syncStatus === 'syncing') return
     setSyncStatus('syncing')
     try {
-      const res = await fetch('/api/gmail/sync', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ full }),
-      })
-      if (res.ok) {
+      const [gmailRes, calendarRes] = await Promise.all([
+        fetch('/api/gmail/sync', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ full }),
+        }),
+        fetch('/api/calendar/sync', { method: 'POST' }),
+      ])
+      if (gmailRes.ok) {
         setSyncStatus('idle')
         setLastSyncedAt(new Date())
         queryClient.invalidateQueries({ queryKey: ['threads'] })
+        if (calendarRes.ok) {
+          queryClient.invalidateQueries({ queryKey: ['calendar'] })
+        }
       } else {
         setSyncStatus('error')
       }

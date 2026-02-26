@@ -19,7 +19,7 @@ const FEATURES = [
   {
     icon: '📅',
     title: 'Smart Scheduling',
-    desc: 'MailMind reads your Google Calendar and suggests meeting times that fit everyone's schedule automatically.',
+    desc: 'MailMind reads your Google Calendar and suggests meeting times that fit everyone\'s schedule automatically.',
   },
   {
     icon: '📋',

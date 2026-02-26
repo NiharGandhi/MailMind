@@ -39,13 +39,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
     signIn: async ({ user, account }) => {
       if (account?.provider === 'google' && user?.id) {
-        // Trigger initial Gmail sync after sign-in (fire-and-forget)
+        // Trigger initial Gmail + calendar sync after sign-in (fire-and-forget)
         setTimeout(() => {
-          fetch(`${process.env.NEXTAUTH_URL}/api/gmail/sync`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ userId: user.id, full: true }),
-          }).catch(() => {})
+          Promise.all([
+            fetch(`${process.env.NEXTAUTH_URL}/api/gmail/sync`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ userId: user.id, full: true }),
+            }),
+            fetch(`${process.env.NEXTAUTH_URL}/api/calendar/sync`, { method: 'POST' }),
+          ]).catch(() => {})
         }, 2000)
       }
       return true
